@@ -1,4 +1,4 @@
-Program ABMHashing; //Hashing con desplazamiento interno mediante listas enlazadas
+Program Ejercicio2; //Hashing con desplazamiento interno mediante listas enlazadas
 
 uses crt, sysUtils;
 
