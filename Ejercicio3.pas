@@ -30,6 +30,14 @@ var
 //----------------------------------------------------------------------	
 //VALIDACIONES
 
+procedure ValidarSinEspacios(var dato:string);
+begin 
+  	while ((dato = '') or (dato = ' ')) do begin
+		WriteLn('Error, ingrese un valor valido');  
+		ReadLn(dato);
+	end;
+end;
+
 function ValorEntero(texto: string): integer;
 var
   valor, codigoDeError: integer;
@@ -311,7 +319,7 @@ begin
 
 	reset(Clientes);
 	Seek(Clientes, Numero);
-	writeln('Cliente ', (Numero div (cantRegistros - 1)));
+	//writeln('Cliente ', (Numero div (cantRegistros - 1)));
 	reset(aMetadata);
 	while (not EOF(aMetadata)) do begin
 		read(aMetadata, regMeta);
@@ -327,7 +335,6 @@ begin
 	end;
 	Close(Clientes);
 	Close(aMetadata);
-
 end;
 
 
@@ -382,7 +389,7 @@ begin
 		end else begin
 			writeln('Ingrese ', regMeta.nombre);
 			readln(registro.dato);
-			//Validar
+			ValidarSinEspacios(registro.dato);
 			if (Length(registro.dato) > regMeta.caracteres) then begin
 				delete(registro.dato, (regMeta.caracteres + 1), Length(registro.dato));
 				writeln('En ', regMeta.nombre, ' se pusieron mas caracteres de los permitidos, se proceden a usar los primeros ', regMeta.caracteres, ' caracteres');
@@ -457,7 +464,7 @@ begin
 	contarClientes();
 	if (cantClientes = 0) then begin
 		writeln('No hay clientes registrados');
-		writeln('Precione una tecla para volver al menu principal');
+		writeln('Presione una tecla para volver al menu principal');
 		readkey;
 		exit;
 	end;
@@ -482,6 +489,7 @@ begin
 			if (respuesta = 'S') then begin
 				writeln('Ingrese ', regMeta.nombre);
 				readln(registro.dato);
+				ValidarSinEspacios(registro.dato);
 				if (length(registro.dato) > regMeta.caracteres) then begin
 					delete(registro.dato, regMeta.caracteres, length(registro.dato));
 				end;
@@ -509,8 +517,8 @@ BEGIN
 	crearArchivoMetadata(aMetadata, archivoEncontrado);
 	if (archivoEncontrado = False) then begin
 		while (Sigo = True) do begin
-	  		writeln('1 crear campo');
-	  		writeln('0 Salir');
+	  		writeln('1. Crear campo');
+	  		writeln('0. Salir');
 	  		readln(OpcionAux);
 	  	if (ValidarOpcion(OpcionAux) = True) then begin
 	  		Opcion:= ValorEntero(OpcionAux);
@@ -543,7 +551,7 @@ BEGIN
 
 	   	end else begin
 	   		clrscr;
-		 	writeln('Error, ', OpcionAux, ' no es un dato permitido, por favor ingrese un numero que corresponda a las opcines en pantalla');
+		 	writeln('Error, ', OpcionAux, ' no es un dato permitido, por favor ingrese un numero que corresponda a las opciones en pantalla');
 	   	end;
 	end;
 	end;
@@ -552,12 +560,12 @@ BEGIN
 	contarCampos(aMetadata);
 	crearArchivoClientes(Clientes);
 	while (Sigo = True) do begin
-	  writeln('1 Alta');
-	  writeln('2 Baja');
-	  writeln('3 Modificacion');
-	  writeln('4 Mostrar datos');
-	  writeln('5 Mostrar estructura del registro');
-	  writeln('0 Salir');
+	  writeln('1. Alta');
+	  writeln('2. Baja');
+	  writeln('3. Modificacion');
+	  writeln('4. Mostrar datos');
+	  writeln('5. Mostrar estructura del registro');
+	  writeln('0. Salir');
 	  readln(OpcionAux);
 	  if (ValidarOpcion(OpcionAux) = True) then begin
 	  	Opcion:= ValorEntero(OpcionAux);
@@ -594,14 +602,13 @@ BEGIN
 				end;
 	  	end;
 	  	if (Opcion <> 0) then begin
-			writeln('Presiones una tecla para continuar');
+			writeln('Presione una tecla para continuar');
 			readkey;
 			clrscr;
 	  	end;
 	   end else begin
 	   		clrscr;
-		 	writeln('Error, ', OpcionAux, ' no es un dato permitido, por favor ingrese un numero que corresponda a las opcines en pantalla');
+		 	writeln('Error, ', OpcionAux, ' no es un dato permitido, por favor ingrese un numero que corresponda a las opciones en pantalla');
 	   end;
 	end;
-
 END.
