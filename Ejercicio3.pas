@@ -385,6 +385,7 @@ begin
 			//Validar
 			if (Length(registro.dato) > regMeta.caracteres) then begin
 				delete(registro.dato, (regMeta.caracteres + 1), Length(registro.dato));
+				writeln('En ', regMeta.nombre, ' se pusieron mas caracteres de los permitidos, se proceden a usar los primeros ', regMeta.caracteres, ' caracteres');
 			end;
 			Seek(Clientes, FileSize(Clientes));
 			write(Clientes, registro);
