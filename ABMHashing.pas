@@ -1,4 +1,4 @@
-Program Ejercicio2; //Hashing con desplazamiento interno mediante listas enlazadas
+Program Ej2; //Hashing con desplazamiento interno mediante listas enlazadas
 
 uses crt, sysUtils;
 
