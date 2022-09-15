@@ -114,8 +114,8 @@ procedure crearArchivoMetaData(var aMetadata: archivoMetadata; var archivoEncont
 var 
 	registro:metadata;
 begin
-	assign(aMetadata,'C:\Base de Datos 2022\ProgramasPascal\Ej3-VersionFinal\metadata.dat');
-    if not FileExists('C:\Base de Datos 2022\ProgramasPascal\Ej3-VersionFinal\metadata.dat') then
+	assign(aMetadata,'metadata.dat');
+    if not FileExists('metadata.dat') then
       Begin
         Writeln('El archivo "metadata" no existe, se procede a crear uno');
         rewrite(aMetadata);
@@ -135,8 +135,8 @@ end;
 Procedure crearArchivoClientes(var Clientes: archivoClientes);
 begin
 
-	assign(Clientes, 'C:\Base de Datos 2022\ProgramasPascal\Ej3-VersionFinal\clientes.dat');
-	if (not FileExists('C:\Base de Datos 2022\ProgramasPascal\Ej3-VersionFinal\clientes.dat')) then begin
+	assign(Clientes, 'clientes.dat');
+	if (not FileExists('clientes.dat')) then begin
 		writeln('El archivo "Clientes" no existe, se procede a crear uno');
 		rewrite(Clientes);
 		Close(Clientes);
@@ -330,7 +330,7 @@ var
 begin
 
 	reset(Clientes);
-	assign(ClientesB, 'C:\Base de Datos 2022\ProgramasPascal\Ej3-VersionFinal\clientesB.dat');
+	assign(ClientesB, 'clientesB.dat');
 	rewrite(ClientesB);
 	Seek(Clientes, 0);
 	while (not EOF(Clientes)) do begin
