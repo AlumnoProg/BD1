@@ -361,8 +361,8 @@ var
 BEGIN 
 
 	Sigo:= True;
-	assign(Clientes, 'C:\Base de Datos 2022\ProgramasPascal\Ej1-BD-Version2\clientes.dat');
-	if (not fileexists('C:\Base de Datos 2022\ProgramasPascal\Ej1-BD-Version2\clientes.dat')) then begin
+	assign(Clientes, 'clientes.dat');
+	if (not fileexists('clientes.dat')) then begin
 	  writeln('El archivo no existe, se procede a crear uno');
 	  rewrite(Clientes);
 	end; 
