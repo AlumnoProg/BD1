@@ -22,9 +22,10 @@ Type
     ArchivoCliente = File of Cliente;
 
 var
-    opcion,CodigoABajar: integer;
+    opcion,Codigo: integer;
     A: ArchivoCliente;
     RegistroCliente: Cliente;
+    Aux: string;
 
 //---------------------------METODOS---------------------------------
 
@@ -38,6 +39,19 @@ begin
     WriteLn('');
     WriteLn('-Presione para continuar-');
     readln();
+end;
+
+function codigoValido(Codigo:string):boolean;
+var
+    C: Char;
+    B: Boolean;
+begin
+    for C in Codigo do begin
+        B := C in ['0'..'9'];
+        if not B then 
+            Break;
+    end;
+    codigoValido := B;
 end;
 
 function proximaPosicionLibreZO(): integer;
@@ -122,12 +136,15 @@ procedure mostrarArchivo();
 var
     C:Cliente;
     NReg:integer;
+    vacio:boolean;
 begin
     NReg := 0;
+    vacio := true;
     Reset(A);
     while not EOF(A) do begin
         read(A,C);
         if C.Ocupado then begin
+            vacio := false;
             writeln('- - - - - - - - - - - - - - - - - - - - - - -');
             writeln('PosicionRegistro: ' + NReg.ToString);
             Writeln('Nombre: ' + C.Nombre);
@@ -147,6 +164,8 @@ begin
         end;
         inc(NReg);
     end;
+    if vacio then
+        WriteLn('El archivo se encuentra vacio');
     Close(A);
 end;
 
@@ -314,7 +333,12 @@ BEGIN
         case Opcion of
             1: begin
                 Write('Ingrese el codigo a dar de alta: ');
-                ReadLn(RegistroCliente.Codigo);
+                ReadLn(Aux); 
+                while (Aux = '') or (not codigoValido(Aux)) do begin
+                    writeln('Ingrese un codigo valido');
+                    ReadLn(Aux); 
+                end;
+                RegistroCliente.Codigo := StrToInt(Aux);
                 if not existeCodigo(RegistroCliente.Codigo) then begin
                     RegistroCliente := ingresarDatos(RegistroCliente.Codigo);
                     alta(RegistroCliente);
@@ -328,29 +352,40 @@ BEGIN
             end;
             2: begin
                 write('Ingrese el codigo a dar de baja: ');   
-                ReadLn(CodigoABajar);
-                if existeCodigo(CodigoABajar) then
-                    baja(CodigoABajar)
+                ReadLn(Aux); 
+                while (Aux = '') or (not codigoValido(Aux)) do begin
+                    writeln('Ingrese un codigo valido');
+                    ReadLn(Aux); 
+                end;
+                Codigo := StrToInt(Aux);
+                if existeCodigo(Codigo) then
+                    baja(Codigo)
                 else
                     WriteLn('El codigo ingresado no se encuentra en el archivo');
                 continuar();
             end;
             3: begin
                 Write('Ingrese el codigo a modificar: ');
-                ReadLn(RegistroCliente.Codigo);
-                WriteLn('Ingrese los nuevos datos');
-                Write('Nombre: ');
-                ReadLn(RegistroCliente.Nombre);
-                Write('Apellido: ');
-                ReadLn(RegistroCliente.Apellido);
-                if existeCodigo(RegistroCliente.Codigo) then
-                    modificacion(RegistroCliente)
-                else
-                     WriteLn('El codigo ingresado no se encuentra en el archivo');
-                continuar();            
+                ReadLn(Aux); 
+                while (Aux = '') or (not codigoValido(Aux)) do begin
+                    writeln('Ingrese un codigo valido');
+                    ReadLn(Aux); 
+                end;
+                RegistroCliente.Codigo := StrToInt(Aux);
+                if existeCodigo(RegistroCliente.Codigo) then begin
+                    WriteLn('Ingrese los nuevos datos');
+                    Write('Nombre: ');
+                    ReadLn(RegistroCliente.Nombre);
+                    Write('Apellido: ');
+                    ReadLn(RegistroCliente.Apellido);
+                    modificacion(RegistroCliente);
+                end else
+                    WriteLn('El codigo ingresado no se encuentra en el archivo');
+                continuar();         
             end;
             4: begin
-                mostrarArchivo();    
+                mostrarArchivo(); 
+                continuar();   
             end;
             0: begin
                 writeln('Saliendo...');
