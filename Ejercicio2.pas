@@ -1,4 +1,4 @@
-Program Ejercicio2; //Hashing con desplazamiento interno mediante listas enlazadas. Solo se hacen bajas logicas
+Program Ejercicio2; //Hashing con desplazamiento interno mediante listas enlazadas
 
 uses crt, sysUtils;
 
@@ -232,9 +232,9 @@ begin
             while RegDeArchivo.Siguiente <> -1 do begin //busca en las colisiones
                 Seek(A,RegDeArchivo.Siguiente);
                 Read(A,RegDeArchivo);
+                Seek(A,FilePos(A) - 1);
                 if RegDeArchivo.Codigo = C.Codigo then begin
                     RegDeArchivo.ACTIVO := True;
-                    Seek(A,RegDeArchivo.Siguiente);
                     Write(A,RegDeArchivo);
                     Break;
                 end;
@@ -261,9 +261,9 @@ begin
         while RegDeArchivo.Siguiente <> -1 do begin //busca en las colisiones
             Seek(A,RegDeArchivo.Siguiente);
             Read(A,RegDeArchivo);
+            Seek(A,FilePos(A) - 1);
             if RegDeArchivo.Codigo = Codigo then begin
                 RegDeArchivo.ACTIVO := False;
-                Seek(A,RegDeArchivo.Siguiente);
                 Write(A,RegDeArchivo);
                 Break;
             end; 
@@ -294,10 +294,10 @@ begin
         while RegDeArchivo.Siguiente <> -1 do begin
             Seek(A,RegDeArchivo.Siguiente);
             Read(A,RegDeArchivo);
+            Seek(A,FilePos(A) - 1);
             if RegDeArchivo.Codigo = C.Codigo then begin
                 RegDeArchivo.Nombre := C.Nombre;
                 RegDeArchivo.Apellido := C.Apellido;
-                Seek(A,RegDeArchivo.Siguiente);
                 Write(A,RegDeArchivo);
                 Break;
             end;
